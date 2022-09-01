@@ -191,11 +191,13 @@ This task involves teaming up with a collaborator. Exchange *GitHub* username de
 
 Now, lets create a new figure in the code block below that simplifies the one produced in **Task 5**. Instead of all species, lets just plot three of the species (chromis, lemon, and acantho). In the figure code chunk make sure you add the necessary arguments (e.g., `fig.cap`) so that you can refer to Figure \@ref(fig:collabFig).
 
-```{r, collabFig, echo=TRUE, eval=TRUE}
+```{r, collabFig, fig.cap = TRUE, echo=TRUE, eval=TRUE}
 # You want to make changes to your collaborators figure in Task 5. Maybe you want to create a figure that focuses only on three fish species instead of the 5. More specifically, chromis, lemon, and acantho. Add code here to revise their figure to do that.
 
 data2 %>% filter(species == c("chromis", "lemon", "acantho")) %>% ggplot(data2, mapping = aes(x = treatment,y = activity, fill=species)) +
   geom_boxplot() + facet_wrap(~species)
+
+#Bye
 ```
 
 
