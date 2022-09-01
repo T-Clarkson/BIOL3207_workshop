@@ -1,7 +1,7 @@
 ---
 title: "Git, GitHub & Ocean Acidification"
-author: "<your name and u number>"
-date: "`r Sys.Date()`"
+author: "Tianna Clarkson"
+date: "01/09/2022"
 output: 
   bookdown::html_document2:
     code_folding: show
@@ -40,7 +40,7 @@ p_load(bookdown, tidyverse, ggforce, flextable, latex2exp, png, magick) # basica
 
 While the tasks are meant to get you familiar with how GitHub works you should try and make regular commits as you work your way through. We want to see how often you're using Git. Below, within the `[]` brackets provide the link to your GitHub Repo. Just cut and paste it so we know what the repo name is and where it is. 
 
-(My GitHub Repository)[]
+(My GitHub Repository)[https://github.com/T-Clarkson/BIOL3207_workshop]
 
 By adding the link in the `[]` brackets it will hyperlink "My GitHub Repository". This is how to hyperlink in Rmarkdown documents.
 
@@ -52,7 +52,7 @@ This task involves cloning your repository on your computer. Where should we pla
 
 ```{r, answer1, echo=TRUE, eval = FALSE}
 
-## Write your answer here. 
+## The files are not automatically backed up by GitHub or Git. You must push them into the cloud before GitHub will save any changes. This means that if you lose your progress for whatever reason, such as your computer crashing, GitHub will only have the changes up to the point from which you cloned or pulled the repository.
 
 ```
 
@@ -63,7 +63,7 @@ Before moving on you might have noticed that the code block above has a name `an
 >**Question 2**: In the second code block called `answer1` if we change echo = TRUE to echo = FALSE what will happen to the code block `answer1` when you render it?
 
 ```{r answer2, echo=TRUE, eval = FALSE}
-# Write your answer here
+# echo = FALSE would instruct the file to only display the output of the code, not the code itself. As this section of the file is only text and has no output, it would not be displayed at all if echo was set to FALSE.
 ```
 
 **Important**: Notice that `eval = FALSE` for many code chunks. When you complete the tasks. Make sure to change these to `TRUE` otherwise you will find your code does not run!
@@ -92,7 +92,7 @@ Write your answer in the code chunk below:
 
 ```{r, loaddata, eval = FALSE, echo=TRUE}
 
-path <- "replace this text with your relative path to a file in the 'data/' folder"
+path <- "C:\\Users\\jelly\\OneDrive\\Documents\\School\\Uni\\Australia\\Data Science\\workshop1st_sep\\BIOL3207_workshop\\data"
   
 data <- read_csv(path)
 
