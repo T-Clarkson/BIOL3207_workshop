@@ -169,13 +169,13 @@ Now that you have the figure you may also want to write / save it as a separate 
 
 ```{r, savefig}
 # Use ggsave to save the figure
-ggsave('C:/Users/jelly/OneDrive/Documents/School/Uni/Australia/Data Science/workshop1st_sep/BIOL3207_workshop/output/figures/activity_by_species_and_treatments.png',width=6,height=3)
+ggsave('C:/Users/jelly/OneDrive/Documents/School/Uni/Australia/Data Science/workshop1st_sep/BIOL3207_workshop/output/figures/activity_by_species_and_treatmentss.png',width=6,height=3)
 ```
 
 >**Question 6**: Given that you have added `output/figures/` to your `.gitignore` file describe what you notice about what you see in *GitHub Desktop*. 
 
 ```{r}
-## Write your answer here
+#It should prevent GitHub from tracking changes in that pathway, so it doesn't stage/commit the figure.
 ```
 
 Last question for this task. I promise! It's important to think very carefully about what you track and ignore.
@@ -183,7 +183,7 @@ Last question for this task. I promise! It's important to think very carefully a
 >**Question 7**: Assume that you added the `pics/` folder to your working directory to plot pictures of each fish on your figure. Do you want to track the files in the pic/ folder on GitHub despite them being .png files? Explain your reasoning. 
 
 ```{r, answer6}
-## Add your answer here
+##Yes, because the coding for the figure would involve those images. If the images were not available to others via the repository, they would not be able to replicate the figure themselves.
 ```
 
 # **Task 6**
