@@ -26,7 +26,7 @@ Throughout we are also going to learn a bit more about how to format Rmarkdown d
 
 ```{r loadpacks, message=FALSE, results='hide'}
 # Install a load of packages that we'll use. I'll show you a shortcut that I love to use. Try using the p_load function in the "pacman" package. p_load will execute both the install.packages and library commands in one shot so they only need to be used once to install pacman itself.
-install.packages("pacman", repos = "http://cran.us.r-project.org")
+
 library(pacman)
 
 # Install bookdown for rendering because we'll need this. While we're at it, lets also install /load the tidyverse
@@ -104,9 +104,9 @@ Let's say that you added a new data folder that was inside an output folder (i.e
 
 ```{r, write, eval = FALSE, echo=TRUE}
 
-path <- "./output/data/OA_activitydat_20190302_BIOL3207.csv"
+path <- "./output/data/OA_activitydat_20190302_BIOL3207_tidied.csv"
 
-write_csv(data, file = path)
+write_csv(data2, file = path)
 
 ```
 
@@ -118,7 +118,6 @@ We're ready for some coding! Lets do some coding and wrangling of the `OA_activi
 First, write some code below to remove missing data
 
 ```{r, rmMiss}
-View(data)
 data <- na.omit(data)
 ```
 
@@ -126,10 +125,14 @@ Second, drop out irrelevant columns and check that there are no spelling issues 
 
 ```{r summaryTab}
 # Drop irrelevant columns
-data2 <- data %>% select(-c(loc,comment))
+### data2 <- data3 %>% select(-c(loc,comment)) ### - This was my original method, but this line is preventing knitting to HTML.
+data2 <- data
+data2$loc = NULL
+data2$comment = NULL
 # Check spelling in species and treatment but also generate a summary table
 list(unique(data2$species))
 list(unique(data2$treatment))
+
 
 data2 %>%
   group_by(species) %>%
@@ -197,7 +200,7 @@ Now, lets create a new figure in the code block below that simplifies the one pr
 data2 %>% filter(species == c("chromis", "lemon", "acantho")) %>% ggplot(data2, mapping = aes(x = treatment,y = activity, fill=species)) +
   geom_boxplot() + facet_wrap(~species)
 ```
-
+#Hello - conflict
 
 # **Task 7**
 This task involves creating and resolving conflicts. Conflicts in files are denoted with specific markers. They look like this when you open a file with conflicts.
@@ -216,6 +219,9 @@ Resolving is easy. Decide on what changes you think are the best to proceed with
 
 >**Stretch Task**: Try creating another conflict in the `collabFig` code chunk of the Rmarkdown file. Resolve the conflict again. More practice doing this is always good!
 
+```{r}
+#We both added a line saying Hello/Bye at line 200. When the second person pushed their changes, they had a conflict arise. One of the options was then selected and remained. (We did this activity using the R Markdown files, not the README file)
+```
 Once you have figured out how to create and solve conflicts it's time to update the README file with a little more detail about your project and the general workflow. The *GitHub* webpage uses the README file as a sort of introduction to the project. 
 
 **Task**: Provide details about the workflow (i.e., which files are used, when and why) and write a detailed description of the data file used. Include the details about what the column means and which data file someone should use. 
@@ -227,6 +233,26 @@ There's not too much to do in this task on the coding front! You just need to cr
 
 # **Task 9**
 Here, run some statistical tests to determine, for each species, whether the control vs high $CO^2$ treatments differ significantly from each other and in what direction. Provide the difference in means, their 95% confidence intervals, t-statistic, df and p-value. 
+
+```{r}
+model<-lm(activity~treatment*species, data=data2)
+summary(model)
+#Suggests a significant impact of treatment on activity of humbug and lemon fish.
+
+model2<-lm(sl~treatment*species, data=data2)
+summary(model2)
+#Shows no significant impact of treatment on the length of any species.
+
+t.test(data2$activity[data2$treatment=="CO2" & data2$species=="humbug"],data2$activity[data2$treatment=="control" & data2$species=="humbug"])
+#There is a significant difference between the activity levels of humbug fish exposed to control and high CO2 conditions (t-statistic = 2, df = 124, P=0.02, confidence intervals = 0.83, 9.9, difference in means = 5).
+
+t.test(data2$activity[data2$treatment=="CO2" & data2$species=="lemon"],data2$activity[data2$treatment=="control" & data2$species=="lemon"])
+#There is no significant difference in the activity levels of lemon fish exposed to control and high CO2 conditions (t-statistic = 2, df = 42, P=0.07, confidence intervals = -0.55, 13.04, difference in means = 6)
+
+ggplot(data2, aes(x=treatment,y=activity,colour=species))+
+  geom_boxplot()
+
+```
 
 >**Stretch Task**: You can of course do this for each species seperately, but those who want a challenge, think about how you might use a loop or even some wrangling methods you have already learnt from the tidyverse to run these tests across all 6 species in a single block of code. If you're familiar with functions, you can even think about writing your own function! All these strategies will avoid having to copy and paste large chunks of code. If you're repeating anything, writing functions and loops are good ways to simplify.
 
