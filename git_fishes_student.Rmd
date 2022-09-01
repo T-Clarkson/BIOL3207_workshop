@@ -196,8 +196,6 @@ Now, lets create a new figure in the code block below that simplifies the one pr
 
 data2 %>% filter(species == c("chromis", "lemon", "acantho")) %>% ggplot(data2, mapping = aes(x = treatment,y = activity, fill=species)) +
   geom_boxplot() + facet_wrap(~species)
-
-#Bye
 ```
 
 
