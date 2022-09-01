@@ -92,7 +92,7 @@ Write your answer in the code chunk below:
 
 ```{r, loaddata, eval = FALSE, echo=TRUE}
 
-path <- "C:/Users/jelly/OneDrive/Documents/School/Uni/Australia/Data Science/workshop1st_sep/BIOL3207_workshop/data/OA_activitydat_20190302_BIOL3207.csv"
+path <- "./data/OA_activitydat_20190302_BIOL3207.csv"
   
 data <- read_csv(path)
 
@@ -104,7 +104,7 @@ Let's say that you added a new data folder that was inside an output folder (i.e
 
 ```{r, write, eval = FALSE, echo=TRUE}
 
-path <- "C:/Users/jelly/OneDrive/Documents/School/Uni/Australia/Data Science/workshop1st_sep/BIOL3207_workshop/output/data/OA_activitydat_20190302_BIOL3207.csv"
+path <- "./output/data/OA_activitydat_20190302_BIOL3207.csv"
 
 write_csv(data, file = path)
 
@@ -169,7 +169,7 @@ Now that you have the figure you may also want to write / save it as a separate 
 
 ```{r, savefig}
 # Use ggsave to save the figure
-ggsave('C:/Users/jelly/OneDrive/Documents/School/Uni/Australia/Data Science/workshop1st_sep/BIOL3207_workshop/output/figures/activity_by_species_and_treatmentss.png',width=6,height=3)
+ggsave('./output/figures/activity_by_species_and_treatmentss.png',width=6,height=3)
 ```
 
 >**Question 6**: Given that you have added `output/figures/` to your `.gitignore` file describe what you notice about what you see in *GitHub Desktop*. 
