@@ -106,7 +106,7 @@ Let's say that you added a new data folder that was inside an output folder (i.e
 
 path <- "./output/data/OA_activitydat_20190302_BIOL3207_tidied.csv"
 
-write_csv(data2, file = path)
+write_csv(data, file = path)
 
 ```
 
@@ -125,20 +125,27 @@ Second, drop out irrelevant columns and check that there are no spelling issues 
 
 ```{r summaryTab}
 # Drop irrelevant columns
-### data2 <- data3 %>% select(-c(loc,comment)) ### - This was my original method, but this line is preventing knitting to HTML.
-data2 <- data
-data2$loc = NULL
-data2$comment = NULL
+
+#Attempt 1: data <- data %>% select(-c(loc,comment)) ### - This was my original method, but this line is preventing knitting to HTML.
+#Attempt 2: data <- data[,!names(data) %in% c("loc", "comment")]
+#Attempt 3: data <- data
+#           data$loc = NULL
+#           data$comment = NULL
+#Attempt 3 below:
+data <- data
+          data$loc = NULL
+          data$comment = NULL
+
 # Check spelling in species and treatment but also generate a summary table
-list(unique(data2$species))
-list(unique(data2$treatment))
 
+list(unique(data$species))
+list(unique(data$treatment))
 
-data2 %>%
+data %>%
   group_by(species) %>%
   summarise(mean_sl = mean(sl),sd_sl=sd(sl),mean_activity=mean(activity),sd_activity=sd(activity),n=n())
 # Use flextable to render the summary table in a tidy format
-flextable(data2 %>%
+flextable(data %>%
   group_by(species) %>%
   summarise(mean_sl = mean(sl),sd_sl=sd(sl),mean_activity=mean(activity),sd_activity=sd(activity),n=n()))
 ```
@@ -159,7 +166,7 @@ Ignoring figures can be important because they take up quite a lot of space in y
 
 ```{r, prettyfig, fig.align='center', fig.cap="Box plots showing the means and ranges of the activity levels of fish of different species when exposed to different treatments."}
 # ggplot figure showing mean activity for each treatment (Control, OA) for each species.
-ggplot(data2, mapping = aes(x = treatment,y = activity,colour=species)) +
+ggplot(data, mapping = aes(x = treatment,y = activity,colour=species)) +
   geom_boxplot()
 
 ```
@@ -197,7 +204,7 @@ Now, lets create a new figure in the code block below that simplifies the one pr
 ```{r, collabFig, fig.cap = TRUE, echo=TRUE, eval=TRUE}
 # You want to make changes to your collaborators figure in Task 5. Maybe you want to create a figure that focuses only on three fish species instead of the 5. More specifically, chromis, lemon, and acantho. Add code here to revise their figure to do that.
 
-data2 %>% filter(species == c("chromis", "lemon", "acantho")) %>% ggplot(data2, mapping = aes(x = treatment,y = activity, fill=species)) +
+data %>% filter(species == c("chromis", "lemon", "acantho")) %>% ggplot(data2, mapping = aes(x = treatment,y = activity, fill=species)) +
   geom_boxplot() + facet_wrap(~species)
 ```
 #Hello - conflict
@@ -235,21 +242,21 @@ There's not too much to do in this task on the coding front! You just need to cr
 Here, run some statistical tests to determine, for each species, whether the control vs high $CO^2$ treatments differ significantly from each other and in what direction. Provide the difference in means, their 95% confidence intervals, t-statistic, df and p-value. 
 
 ```{r}
-model<-lm(activity~treatment*species, data=data2)
+model<-lm(activity~treatment*species, data=data)
 summary(model)
 #Suggests a significant impact of treatment on activity of humbug and lemon fish.
 
-model2<-lm(sl~treatment*species, data=data2)
+model2<-lm(sl~treatment*species, data=data)
 summary(model2)
 #Shows no significant impact of treatment on the length of any species.
 
-t.test(data2$activity[data2$treatment=="CO2" & data2$species=="humbug"],data2$activity[data2$treatment=="control" & data2$species=="humbug"])
+t.test(data$activity[data2$treatment=="CO2" & data$species=="humbug"],data$activity[data$treatment=="control" & data2$species=="humbug"])
 #There is a significant difference between the activity levels of humbug fish exposed to control and high CO2 conditions (t-statistic = 2, df = 124, P=0.02, confidence intervals = 0.83, 9.9, difference in means = 5).
 
-t.test(data2$activity[data2$treatment=="CO2" & data2$species=="lemon"],data2$activity[data2$treatment=="control" & data2$species=="lemon"])
+t.test(data$activity[data$treatment=="CO2" & data$species=="lemon"],data$activity[data$treatment=="control" & data$species=="lemon"])
 #There is no significant difference in the activity levels of lemon fish exposed to control and high CO2 conditions (t-statistic = 2, df = 42, P=0.07, confidence intervals = -0.55, 13.04, difference in means = 6)
 
-ggplot(data2, aes(x=treatment,y=activity,colour=species))+
+ggplot(data, aes(x=treatment,y=activity,colour=species))+
   geom_boxplot()
 
 ```
