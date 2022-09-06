@@ -90,7 +90,7 @@ Make sure you have added a `data/` folder to your working directory that you jus
 
 Write your answer in the code chunk below:
 
-```{r, loaddata, eval = FALSE, echo=TRUE}
+```{r, loaddata, eval = TRUE, echo=TRUE}
 
 path <- "./data/OA_activitydat_20190302_BIOL3207.csv"
   
@@ -102,7 +102,7 @@ Let's say that you added a new data folder that was inside an output folder (i.e
 
 >**Question 4**: Using the `write_csv` function how would you write the path name to save this file to `output/data`?
 
-```{r, write, eval = FALSE, echo=TRUE}
+```{r, write, eval = TRUE, echo=TRUE}
 
 path <- "./output/data/OA_activitydat_20190302_BIOL3207_tidied.csv"
 
@@ -250,7 +250,7 @@ model2<-lm(sl~treatment*species, data=data)
 summary(model2)
 #Shows no significant impact of treatment on the length of any species.
 
-t.test(data$activity[data2$treatment=="CO2" & data$species=="humbug"],data$activity[data$treatment=="control" & data2$species=="humbug"])
+t.test(data$activity[data$treatment=="CO2" & data$species=="humbug"],data$activity[data$treatment=="control" & data$species=="humbug"])
 #There is a significant difference between the activity levels of humbug fish exposed to control and high CO2 conditions (t-statistic = 2, df = 124, P=0.02, confidence intervals = 0.83, 9.9, difference in means = 5).
 
 t.test(data$activity[data$treatment=="CO2" & data$species=="lemon"],data$activity[data$treatment=="control" & data$species=="lemon"])
